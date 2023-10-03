@@ -49,6 +49,9 @@ namespace LOK.Common.Characters.Kenney
             //TODO: Write MoveDir according to inputs
             //You can _GetInputMoveLeft /  _GetInputMoveRight() / _GetInputMoveUp() / _GetInputMoveDown()
             //Don't forget to normalize ;)
+            _moveDirWriter.MoveDir = new Vector2(
+                (_GetInputMoveLeft() ? -1 : 0) + (_GetInputMoveRight() ? 1 : 0),
+                (_GetInputMoveDown() ? -1 : 0) + (_GetInputMoveUp() ? 1 : 0));
         }
 
         private bool _GetInputDownAction()

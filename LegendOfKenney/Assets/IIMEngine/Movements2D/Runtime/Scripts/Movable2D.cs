@@ -2,13 +2,8 @@ using UnityEngine;
 
 namespace IIMEngine.Movements2D
 {
-    public class Movable2D : MonoBehaviour,
-        IMove2DDirReader, IMove2DDirWriter,
-        IMove2DOrientReader, IMove2DOrientWriter,
-        IMove2DSpeedReader, IMove2DSpeedWriter,
-        IMove2DSpeedMaxReader, IMove2DSpeedMaxWriter,
-        IMove2DTurnBackReader, IMove2DTurnBackWriter,
-        IMove2DLockedReader, IMove2DLockedWriter
+    public class Movable2D : MonoBehaviour, IMovable2DWriter, IMovable2DReader
+        
     {
         public Vector2 MoveDir { get; set; }
 

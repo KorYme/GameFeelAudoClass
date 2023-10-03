@@ -48,26 +48,36 @@ namespace LOK.Common.Characters.Kenney
         private void Start()
         {
             //Call ChangeState using StartState
+            ChangeState(StartState);
         }
 
         private void Update()
         {
             //Call CurrentState StateUpdate
+            CurrentState.StateUpdate();
         }
 
         private void _InitAllStates()
         {
             //Call StateInit for all states
+            foreach (AKenneyState state in AllStates)
+            {
+                state.StateInit(this);
+            }
         }
 
         public void ChangeState(AKenneyState state)
         {
             //Call StateExit for current state (be careful, CurrentState can be null)
+            CurrentState?.StateExit(state);
 
             //Change PreviousState to CurrentState
+            PreviousState = CurrentState;
             //Change CurrentState using state in function parameter
+            CurrentState = state;
 
             //Call StateEnter for current state (be careful, CurrentState can be null)
+            CurrentState?.StateEnter(PreviousState);
         }
     }
 }

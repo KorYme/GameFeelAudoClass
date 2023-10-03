@@ -10,18 +10,21 @@ namespace LOK.Common.Characters.Kenney
         
         [Header("Movements")]
         [SerializeField] private KenneyMovementsData _movementsData;
-        
-        #pragma warning restore 0414
+
+#pragma warning restore 0414
         #endregion
+
+        IMovable2DWriter _iMovable2DWriter;
 
         private void Awake()
         {
             //Find Movable Interfaces (at the root of this gameObject)
-            //You will need to :
+            //For this script, you will need to :
             // - Check if movements are locked
             // - Read Move Dir
             // - Write Move Orient
             // - Write Move Speed
+            _iMovable2DWriter = GetComponent<IMovable2DWriter>();
         }
 
         private void Update()
@@ -29,11 +32,27 @@ namespace LOK.Common.Characters.Kenney
             //If Movements are locked
             //Force MoveSpeed to 0
 
+            if (_iMovable2DWriter.AreMovementsLocked)
+            {
+                _iMovable2DWriter.MoveSpeed = 0;
+                return;
+            }
+
             //If there is MoveDir
                 //Set MoveSpeed to MovementsData.SpeedMax
                 //Set Move OrientDir to Movedir
             //Else
                 //Set MoveSpeed to 0
+
+            if (_iMovable2DWriter.MoveDir != Vector2.zero)
+            {
+                _iMovable2DWriter.MoveSpeed = _movementsData.SpeedMax;
+                _iMovable2DWriter.OrientDir = _iMovable2DWriter.MoveDir;
+            }
+            else
+            {
+                _iMovable2DWriter.MoveSpeed = 0f;
+            }
         }
     }
 }
