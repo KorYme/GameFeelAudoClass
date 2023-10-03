@@ -27,26 +27,63 @@ namespace LOK.Common.Characters.Kenney
         protected override void OnStateEnter(AKenneyState previousState)
         {
             //Calculate _timer according to MoveSpeed / MoveSpeedMax / MovementsData.StopDecelerationDuration
+            _timer = (Movable.MoveSpeed / Movable.MoveSpeedMax) * MovementsData.StopDecelerationDuration;
         }
 
         protected override void OnStateUpdate()
         {
             //Go to State Idle if Movements are locked
-
+            if (Movable.AreMovementsLocked)
+            {
+                ChangeState(StateMachine.StateIdle);
+                return;
+            }
             //If there is MoveDir
             //If the angle between MoveDir and OrientDir > MovementsData.TurnBackAngleThreshold
-                //If MovementsData.TurnBackAccelerationDuration > 0 => Go to StateTurnBackDecelerate
+                //If MovementsData.TurnBackDecelerationDuration > 0 => Go to StateTurnBackDecelerate
                 //Else If MovementsData.TurnBackAccelerationDuration > 0 => Go to StateTurnBackAccelerate
                 //Else Go to StateAccelerate if MovementsData.StartAccelerationDuration > 0f
                 //Else Go to StateWalk
+            if (Movable.MoveDir != Vector2.zero)
+            {
+                if (Vector2.Angle(Movable.MoveDir, Movable.OrientDir) > MovementsData.TurnBackAngleThreshold)
+                {
+                    if (MovementsData.TurnBackDecelerationDuration > 0)
+                    {
+                        ChangeState(StateMachine.StateTurnBackDecelerate);
+                        return;
+                    }
+                    else if (MovementsData.TurnBackAccelerationDuration > 0)
+                    {
+                        ChangeState(StateMachine.StateTurnBackAccelerate);
+                        return;
+                    }
+                }
+                else if (MovementsData.StartAccelerationDuration > 0f)
+                {
+                    ChangeState(StateMachine.StateAccelerate);
+                    return;
+                }
+                else
+                {
+                    ChangeState(StateMachine.StateWalk);
+                    return;
+                }
+            }
 
             //Increment _timer with deltaTime
-            
+            _timer += Time.deltaTime;
             //If _timer > MovementsData.StopDecelerationDuration
-                //Go to StateIdle (deceleration is finished)
+            //Go to StateIdle (deceleration is finished)
+            if (_timer > MovementsData.StopDecelerationDuration)
+            {
+                ChangeState(StateMachine.StateIdle);
+                return;
+            }
 
             //Calculate percent using timer and MovementsData.StopDecelerationDuration
             //Calculate MoveSpeed according to percent and MoveSpeedMax
+            Movable.MoveSpeed = (_timer / MovementsData.StartAccelerationDuration) * Movable.MoveSpeedMax;
         }
     }
 }

@@ -15,8 +15,8 @@ MonoBehaviour:
   _speedMode: 1
   _speed: 3
   _speedMax: 3
-  _startAccelerationDuration: 0.1
-  _stopDecelerationDuration: 0.2
+  _startAccelerationDuration: 2
+  _stopDecelerationDuration: 2
   _turnBackAngleThreshold: 120
   _turnBackDecelerationDuration: 0.3
   _turnBackAccelerationDuration: 0.1

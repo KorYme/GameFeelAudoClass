@@ -35,6 +35,7 @@ namespace IIMEngine.Movements2D
 
         private void FixedUpdate()
         {
+            Debug.Log(MoveDir);
             if (AreMovementsLocked) {
                 _velocity.x = 0f;
                 _velocity.y = 0f;

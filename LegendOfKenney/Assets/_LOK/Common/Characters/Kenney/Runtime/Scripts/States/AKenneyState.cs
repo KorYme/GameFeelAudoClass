@@ -1,5 +1,6 @@
 ﻿using IIMEngine.Movements2D;
 using LOK.Core.Room;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace LOK.Common.Characters.Kenney
@@ -9,16 +10,14 @@ namespace LOK.Common.Characters.Kenney
         public KenneyStateMachine StateMachine { get; private set; }
 
         public KenneyMovementsData MovementsData => StateMachine.MovementsData;
+        protected IMovable2DWriter Movable => StateMachine.IMovable;
         
         public void ChangeState(AKenneyState state) => StateMachine.ChangeState(state);
-        
-        private IMove2DDirReader _moveDirReader;
 
         public void StateInit(KenneyStateMachine stateMachine)
         {
             StateMachine = stateMachine;
             OnStateInit();
-            _moveDirReader = StateMachine.GetComponent<IMove2DDirReader>();
         }
         
         public void StateEnter(AKenneyState previousState)
@@ -40,7 +39,7 @@ namespace LOK.Common.Characters.Kenney
         
         private void OnRoomEnter(Room room, RoomEnterPoint roomEnterPoint)
         {
-            if (_moveDirReader.MoveDir == Vector2.zero) {
+            if (Movable?.MoveDir == Vector2.zero) {
                 ChangeState(StateMachine.StateIdle);
             }
         }

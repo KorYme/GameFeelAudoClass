@@ -30,6 +30,16 @@ namespace LOK.Common.Characters.Kenney
             StateTurnBackDecelerate,
         };
 
+        public enum KenneyStates
+        {
+            StateIdle,
+            StateWalk,
+            StateAccelerate,
+            StateDecelerate,
+            StateTurnBackAccelerate,
+            StateTurnBackDecelerate,
+        }
+
         public AKenneyState StartState => StateIdle;
 
         public AKenneyState PreviousState { get; private set; }
@@ -38,10 +48,12 @@ namespace LOK.Common.Characters.Kenney
         #pragma warning restore 0414
         #endregion
 
+        public IMovable2DWriter IMovable { get; set; }
+
         private void Awake()
         {
-            IMove2DSpeedMaxWriter speedMax = GetComponent<IMove2DSpeedMaxWriter>();
-            speedMax.MoveSpeedMax = MovementsData.SpeedMax;
+            IMovable = GetComponent<IMovable2DWriter>();
+            IMovable.MoveSpeedMax = MovementsData.SpeedMax;
             _InitAllStates();
         }
 
@@ -65,6 +77,8 @@ namespace LOK.Common.Characters.Kenney
                 state.StateInit(this);
             }
         }
+
+        public void ChangeState(KenneyStates state) => ChangeState(AllStates[(int)state]);
 
         public void ChangeState(AKenneyState state)
         {
