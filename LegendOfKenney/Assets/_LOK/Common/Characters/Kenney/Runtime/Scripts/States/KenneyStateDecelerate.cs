@@ -8,7 +8,7 @@ namespace LOK.Common.Characters.Kenney
         #region DO NOT MODIFY
         #pragma warning disable 0414
 
-        private float _timer = 0f;
+        private float _speedPercent = 0f;
 
         #pragma warning restore 0414
         #endregion
@@ -27,7 +27,7 @@ namespace LOK.Common.Characters.Kenney
         protected override void OnStateEnter(AKenneyState previousState)
         {
             //Calculate _timer according to MoveSpeed / MoveSpeedMax / MovementsData.StopDecelerationDuration
-            _timer = (Movable.MoveSpeed / Movable.MoveSpeedMax) * MovementsData.StopDecelerationDuration;
+            _speedPercent = Movable.MoveSpeed / Movable.MoveSpeedMax;
         }
 
         protected override void OnStateUpdate()
@@ -53,37 +53,40 @@ namespace LOK.Common.Characters.Kenney
                         ChangeState(StateMachine.StateTurnBackDecelerate);
                         return;
                     }
-                    else if (MovementsData.TurnBackAccelerationDuration > 0)
+                    else
                     {
                         ChangeState(StateMachine.StateTurnBackAccelerate);
                         return;
                     }
                 }
-                else if (MovementsData.StartAccelerationDuration > 0f)
+                else 
                 {
-                    ChangeState(StateMachine.StateAccelerate);
-                    return;
-                }
-                else
-                {
-                    ChangeState(StateMachine.StateWalk);
-                    return;
+                    if (MovementsData.StartAccelerationDuration > 0f)
+                    {
+                        ChangeState(StateMachine.StateAccelerate);
+                        return;
+                    }
+                    else
+                    {
+                        ChangeState(StateMachine.StateWalk);
+                        return;
+                    }
                 }
             }
 
-            //Increment _timer with deltaTime
-            _timer += Time.deltaTime;
-            //If _timer > MovementsData.StopDecelerationDuration
+            //Decrement _speedPercent with deltaTime
+            //Calculate percent using _speedPercent and MovementsData.StopDecelerationDuration
+            _speedPercent -= Time.deltaTime / MovementsData.StopDecelerationDuration;
+            //If _speedPercent > MovementsData.StopDecelerationDuration
             //Go to StateIdle (deceleration is finished)
-            if (_timer > MovementsData.StopDecelerationDuration)
+            if (_speedPercent <= 0)
             {
                 ChangeState(StateMachine.StateIdle);
                 return;
             }
 
-            //Calculate percent using timer and MovementsData.StopDecelerationDuration
             //Calculate MoveSpeed according to percent and MoveSpeedMax
-            Movable.MoveSpeed = (_timer / MovementsData.StartAccelerationDuration) * Movable.MoveSpeedMax;
+            Movable.MoveSpeed = Mathf.Clamp(0, MovementsData.SpeedMax, _speedPercent);
         }
     }
 }

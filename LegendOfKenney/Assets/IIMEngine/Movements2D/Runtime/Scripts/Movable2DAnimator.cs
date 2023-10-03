@@ -21,7 +21,7 @@ namespace IIMEngine.Movements2D
         #pragma warning restore 0414
         #endregion
 
-        IMovable2DReader _movableReader;
+        IMovable2D _iMovable;
         Animator _animator;
 
         private void Awake()
@@ -32,7 +32,7 @@ namespace IIMEngine.Movements2D
 
             //Find Movable Interfaces inside _movableGameObject needed to check if object is moving
             //(You'll probably need to check if object movements are locked and if object move speed > 0)
-            _movableReader = _movableGameObject.GetComponent<IMovable2DReader>();
+            _iMovable = _movableGameObject.GetComponent<IMovable2D>();
 
             //Find Animator (attached to this gameObject)
             _animator = GetComponent<Animator>();
@@ -43,8 +43,8 @@ namespace IIMEngine.Movements2D
             //Check if object is moving (store it inside a bool)
             //Bonus : Get Object movement speed and speed max to interpolate animator speed
             //Set animator parameter bool "IsMoving" according to movements infos
-            _animator.SetBool(_isMovingParameterHash, _movableReader?.MoveSpeed > 0);
-            _animator.speed = Mathf.Lerp(_animatorSpeedMin, _animatorSpeedMax, _movableReader.MoveSpeed / _movableReader.MoveSpeedMax);
+            _animator.SetBool(_isMovingParameterHash, _iMovable?.MoveSpeed > 0);
+            _animator.speed = Mathf.Lerp(_animatorSpeedMin, _animatorSpeedMax, _iMovable.MoveSpeed / _iMovable.MoveSpeedMax);
         }
     }
 }

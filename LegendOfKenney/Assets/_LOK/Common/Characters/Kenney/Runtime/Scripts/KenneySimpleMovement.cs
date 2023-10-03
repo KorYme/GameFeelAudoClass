@@ -14,7 +14,7 @@ namespace LOK.Common.Characters.Kenney
 #pragma warning restore 0414
         #endregion
 
-        IMovable2DWriter _iMovable2DWriter;
+        IMovable2D _iMovable2DWriter;
 
         private void Awake()
         {
@@ -24,7 +24,7 @@ namespace LOK.Common.Characters.Kenney
             // - Read Move Dir
             // - Write Move Orient
             // - Write Move Speed
-            _iMovable2DWriter = GetComponent<IMovable2DWriter>();
+            _iMovable2DWriter = GetComponent<IMovable2D>();
         }
 
         private void Update()

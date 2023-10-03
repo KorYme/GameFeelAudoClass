@@ -80,7 +80,7 @@ namespace LOK.Core.UserProfiles
 
         private void _OnButtonOKClicked()
         {
-            if (_IsPasswordValid(_inputFieldPassword.text)) {
+            if (/*!*/_IsPasswordValid(_inputFieldPassword.text)) { // TROUVE
                 OnPasswordValidated?.Invoke();
                 Close();
             } else {

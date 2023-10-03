@@ -2,8 +2,9 @@ using UnityEngine;
 
 namespace IIMEngine.Movements2D
 {
-    public class Movable2D : MonoBehaviour, IMovable2DWriter, IMovable2DReader
-        
+    public class Movable2D : MonoBehaviour, IMovable2D, IMove2DOrientWriter, IMove2DSpeedWriter, IMove2DSpeedMaxWriter, IMove2DTurnBackWriter, IMove2DLockedWriter,
+            IMove2DDirReader,IMove2DOrientReader, IMove2DSpeedReader, IMove2DSpeedMaxReader, IMove2DTurnBackReader, IMove2DLockedReader
+
     {
         public Vector2 MoveDir { get; set; }
 
@@ -35,7 +36,6 @@ namespace IIMEngine.Movements2D
 
         private void FixedUpdate()
         {
-            Debug.Log(MoveDir);
             if (AreMovementsLocked) {
                 _velocity.x = 0f;
                 _velocity.y = 0f;

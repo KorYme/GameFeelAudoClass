@@ -51,10 +51,18 @@ namespace LOK.Common.Characters.Kenney
             }
             //If MovementsData.TurnBackDecelerationDuration > 0 and the angle between MoveDir and OrientDir > MovementsData.TurnBackAngleThreshold
             //Go to StateTurnBackDecelerate
-            if (MovementsData.TurnBackDecelerationDuration > 0 && Vector2.Angle(Movable.MoveDir, Movable.OrientDir) > MovementsData.TurnBackAngleThreshold)
+            if (Vector2.Angle(Movable.MoveDir, Movable.OrientDir) > MovementsData.TurnBackAngleThreshold)
             {
-                ChangeState(StateMachine.StateTurnBackDecelerate);
-                return;
+                if (MovementsData.TurnBackDecelerationDuration > 0)
+                {
+                    ChangeState(StateMachine.StateTurnBackDecelerate);
+                    return;
+                }
+                else
+                {
+                    ChangeState(StateMachine.StateIdle);
+                    return;
+                }
             }
 
             //Force OrientDir to MoveDir

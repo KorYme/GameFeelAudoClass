@@ -48,11 +48,11 @@ namespace LOK.Common.Characters.Kenney
         #pragma warning restore 0414
         #endregion
 
-        public IMovable2DWriter IMovable { get; set; }
+        public IMovable2D IMovable { get; set; }
 
         private void Awake()
         {
-            IMovable = GetComponent<IMovable2DWriter>();
+            IMovable = GetComponent<IMovable2D>();
             IMovable.MoveSpeedMax = MovementsData.SpeedMax;
             _InitAllStates();
         }

@@ -10,7 +10,8 @@ namespace LOK.Common.Characters.Kenney
         public KenneyStateMachine StateMachine { get; private set; }
 
         public KenneyMovementsData MovementsData => StateMachine.MovementsData;
-        protected IMovable2DWriter Movable => StateMachine.IMovable;
+
+        protected IMovable2D Movable => StateMachine.IMovable;
         
         public void ChangeState(AKenneyState state) => StateMachine.ChangeState(state);
 

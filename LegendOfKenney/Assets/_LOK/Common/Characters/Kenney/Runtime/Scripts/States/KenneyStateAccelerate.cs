@@ -8,7 +8,7 @@ namespace LOK.Common.Characters.Kenney
         #region DO NOT MODIFY
         #pragma warning disable 0414
 
-        private float _timer = 0f;
+        private float _speedPercent = 0f;
 
         #pragma warning restore 0414
         #endregion
@@ -29,7 +29,7 @@ namespace LOK.Common.Characters.Kenney
             //Force OrientDir to MoveDir
             Movable.OrientDir = Movable.MoveDir;
             //Calculate _timer according to MoveSpeed / MoveSpeedMax / MovementsData.StartAccelerationDuration
-            _timer = (Movable.MoveSpeed / Movable.MoveSpeedMax) * MovementsData.StartAccelerationDuration;
+            _speedPercent = Movable.MoveSpeed / Movable.MoveSpeedMax;
         }
 
         protected override void OnStateUpdate()
@@ -66,18 +66,18 @@ namespace LOK.Common.Characters.Kenney
                     ChangeState(StateMachine.StateTurnBackDecelerate);
                     return;
                 }
-                else if (MovementsData.TurnBackAccelerationDuration > 0)
+                else
                 {
-                    ChangeState(StateMachine.StateTurnBackAccelerate);
+                    ChangeState(StateMachine.StateIdle);
                     return;
                 }
             }
             //Increment _timer with deltaTime
-            _timer += Time.deltaTime;
+            _speedPercent += Time.deltaTime / MovementsData.StartAccelerationDuration;
             //If _timer > MovementsData.StartAccelerationDuration
                 //Go to StateWalk (acceleration is finished)
 
-            if (_timer > MovementsData.StartAccelerationDuration)
+            if (_speedPercent >= 1)
             {
                 ChangeState(StateMachine.StateWalk);
                 return;
@@ -86,7 +86,7 @@ namespace LOK.Common.Characters.Kenney
             //Calculate percent using timer and MovementsData.StartAccelerationDuration
             //Calculate MoveSpeed according to percent and MoveSpeedMax
             //Force OrientDir to MoveDir
-            Movable.MoveSpeed = (_timer / MovementsData.StartAccelerationDuration) * Movable.MoveSpeedMax;
+            Movable.MoveSpeed = Mathf.Lerp(0, Movable.MoveSpeedMax, _speedPercent);
             Movable.OrientDir = Movable.MoveDir;
         }
     }

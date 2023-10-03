@@ -18,5 +18,5 @@ MonoBehaviour:
   _startAccelerationDuration: 2
   _stopDecelerationDuration: 2
   _turnBackAngleThreshold: 120
-  _turnBackDecelerationDuration: 0.3
-  _turnBackAccelerationDuration: 0.1
+  _turnBackDecelerationDuration: 3
+  _turnBackAccelerationDuration: 3
