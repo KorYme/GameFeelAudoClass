@@ -65,7 +65,8 @@ namespace LOK.Common.Characters.Kenney
             _isFlipping = true;
             while (_orientReader.OrientX != _orientRoot.localScale.x)
             {
-                _orientRoot.localScale = new Vector3(Mathf.Clamp(_orientRoot.localScale.x + (Time.deltaTime/_flipDuration) * _orientReader.OrientX,-1,1), _orientRoot.localScale.y, _orientRoot.localScale.z);
+                _orientRoot.localScale = new Vector3(Mathf.Clamp(_orientRoot.localScale.x + (Time.deltaTime/_flipDuration) * _orientReader.OrientX,-1,1), 
+                    _orientRoot.localScale.y, _orientRoot.localScale.z);
                 yield return null;
             }
             _isFlipping = false;

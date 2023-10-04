@@ -11,22 +11,20 @@ namespace IIMEngine.Movements2D.Effects.Modifiers
         
         [Header("Movable")]
         [SerializeField] private EntityTarget _targetGameObject;
-        private IMove2DSpeedReader _moveSpeedReader;
-        private IMove2DSpeedMaxReader _moveSpeedMaxReader;
+        private IMovable2D _iMovable;
         
         #pragma warning restore 0414
         #endregion
 
         protected override void OnModifierInit()
         {
-            _moveSpeedReader = _targetGameObject.FindFirstResult<IMove2DSpeedReader>();
-            _moveSpeedMaxReader = _targetGameObject.FindFirstResult<IMove2DSpeedMaxReader>();
+            _iMovable = _targetGameObject.FindFirstResult<IMovable2D>();
         }
 
         public override float GetValue()
         {
             //TODO: Calculate and return Percentage according to MoveSpeed and MoveSpeedMax
-            return 0f;
+            return _iMovable.MoveSpeed / _iMovable.MoveSpeedMax;
         }
     }
 }

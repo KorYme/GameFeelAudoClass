@@ -43,7 +43,7 @@ namespace IIMEngine.Effects.Common
             //Reset scale delta X/Y
             _timer = 0f;
             ObjectToScale.localScale -= _scaleDelta;
-            _scaleDelta = Vector3.one;
+            _scaleDelta = Vector3.zero;
         }
 
         protected override IEnumerator OnEffectEndCoroutine()
@@ -74,7 +74,7 @@ namespace IIMEngine.Effects.Common
             //Reset scale delta X/Y
             _timer = 0f;
             ObjectToScale.localScale -= _scaleDelta;
-            _scaleDelta = Vector3.one;
+            _scaleDelta = Vector3.zero;
         }
         
         protected override void OnEffectUpdate()

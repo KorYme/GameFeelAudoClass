@@ -71,7 +71,7 @@ namespace IIMEngine.Effects.Common
             //Reset position delta Y
             _timer = 0f;
             ObjectToMove.localPosition -= _positionDelta;
-            _positionDelta.y = 5f;
+            _positionDelta.y = 0f;
         }
 
         protected override void OnEffectUpdate()

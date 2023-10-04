@@ -1,5 +1,6 @@
 using IIMEngine.Entities.Target;
 using MoreMountains.Feedbacks;
+using System.Linq;
 using UnityEngine;
 
 namespace IIMEngine.Effects.Feel
@@ -34,6 +35,7 @@ namespace IIMEngine.Effects.Feel
         protected override void CustomPlayFeedback(Vector3 position, float feedbacksIntensity = 1)
         {
             //PlayEffect with _effectId inside _effectsControllers
+            _effectsControllers.ToList().ForEach(controller => controller.PlayEffect(_effectID));
         }
     }
 }

@@ -11,8 +11,7 @@ namespace IIMEngine.Movements2D.Effects.Conditions
         
         [Header("Target")]
         [SerializeField] private EntityTarget _target;
-        private IMove2DLockedReader _moveLockedReader;
-        private IMove2DDirReader _moveDirReader;
+        private IMovable2D _iMovable;
 
         public enum MoveCheckState
         {
@@ -28,14 +27,13 @@ namespace IIMEngine.Movements2D.Effects.Conditions
         
         protected override void OnConditionInit()
         {
-            _moveLockedReader = _target.FindFirstResult<IMove2DLockedReader>();
-            _moveDirReader = _target.FindFirstResult<IMove2DDirReader>();
+            _iMovable = _target.FindFirstResult<IMovable2D>();
         }
 
         public override bool IsValid()
         {
             //TODO: Check if target is moving (using MoveLockedReader and MoveDirReader)
-            return false;
+            return !_iMovable.AreMovementsLocked && _iMovable.MoveSpeed > 0;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace IIMEngine.Movements2D.Effects.Conditions
         
         [Header("Movable")]
         [SerializeField] private EntityTarget _target;
-        private IMove2DTurnBackReader _turnBackReader;
+        private IMovable2D _iMovable;
 
         public enum TurnCheckState
         {
@@ -27,13 +27,13 @@ namespace IIMEngine.Movements2D.Effects.Conditions
         
         protected override void OnConditionInit()
         {
-            _turnBackReader = _target.FindFirstResult<IMove2DTurnBackReader>();
+            _iMovable = _target.FindFirstResult<IMovable2D>();
         }
 
         public override bool IsValid()
         {
             //TODO: Check if target is turning back (using TurnBackReader)
-            return false;
+            return _iMovable.IsTurningBack;
         }
     }
 }

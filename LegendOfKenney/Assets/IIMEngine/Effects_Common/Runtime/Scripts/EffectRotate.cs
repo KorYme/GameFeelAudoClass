@@ -40,7 +40,7 @@ namespace IIMEngine.Effects.Common
             //Remove rotation delta from objectToRotate localRotation (using eulerAngles)
             //Reset rotation delta Z
             _timer = 0f;
-            _objectToRotate.eulerAngles -= _eulerAnglesDelta;
+            //_objectToRotate.eulerAngles -= _eulerAnglesDelta; // PROBLEME
             _eulerAnglesDelta.z = 0;
         }
 
@@ -66,7 +66,7 @@ namespace IIMEngine.Effects.Common
             //Remove rotation delta from objectToRotate localRotation (using eulerAngles)
             //Reset rotation delta Z
             _timer = 0f;
-            _objectToRotate.eulerAngles -= _eulerAnglesDelta;
+            //_objectToRotate.eulerAngles -= _eulerAnglesDelta; // PROBLEME
             _eulerAnglesDelta.z = 0;
         }
 

@@ -7,7 +7,7 @@ namespace IIMEngine.Movements2D
 {
     public interface IMovable2D : IMove2DDirWriter, IMove2DOrientWriter, IMove2DSpeedWriter, IMove2DSpeedMaxWriter, IMove2DTurnBackWriter, IMove2DLockedWriter,
             IMove2DDirReader, IMove2DOrientReader, IMove2DSpeedReader, IMove2DSpeedMaxReader, IMove2DTurnBackReader, IMove2DLockedReader
-    {
+    { 
         new Vector2 MoveDir { get; set; }
 
         new Vector2 OrientDir { get; set; }

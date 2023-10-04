@@ -11,20 +11,20 @@ namespace IIMEngine.Movements2D.Effects.Conditions
         
         [Header("Movable")]
         [SerializeField] private EntityTarget _target;
-        private IMove2DOrientReader _orientReader;
+        private IMovable2D _iMovable;
         
         #pragma warning restore 0414
         #endregion
 
         protected override void OnConditionInit()
         {
-            _orientReader = _target.FindFirstResult<IMove2DOrientReader>();
+            _iMovable = _target.FindFirstResult<IMovable2D>();
         }
 
         public override bool IsValid()
         {
             //TODO: Check if target OrientDir.X is not null (using OrientReader)
-            return false;
+            return _iMovable.OrientDir.x != 0;
         }
     }
 }
