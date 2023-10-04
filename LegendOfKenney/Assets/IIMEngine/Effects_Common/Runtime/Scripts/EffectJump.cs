@@ -38,6 +38,9 @@ namespace IIMEngine.Effects.Common
             //Reset Timer
             //Remove position delta from objectToMove localPosition
             //Reset position delta Y
+            _timer = 0f;
+            ObjectToMove.localPosition -= _positionDelta;
+            _positionDelta.y = 0f;
         }
 
         protected override IEnumerator OnEffectEndCoroutine()
@@ -51,7 +54,14 @@ namespace IIMEngine.Effects.Common
                 //Set positionDelta Y according to percentage and jumpHeight
                 //Add position Delta to objectToMove localPosition
                 //Wait for next frame (with yield instruction)
-            yield break;
+            while (_timer < _jumpPeriod)
+            {
+                ObjectToMove.localPosition -= _positionDelta;
+                _timer += Time.deltaTime;
+                _positionDelta.y = _jumpHeight * _jumpCurve.Evaluate(_timer / _jumpPeriod);
+                ObjectToMove.localPosition += _positionDelta;
+                yield return null;
+            }
         }
         
         protected override void OnEffectEnd()
@@ -59,6 +69,9 @@ namespace IIMEngine.Effects.Common
             //Reset Timer
             //Remove position delta from objectToMove localPosition
             //Reset position delta Y
+            _timer = 0f;
+            ObjectToMove.localPosition -= _positionDelta;
+            _positionDelta.y = 5f;
         }
 
         protected override void OnEffectUpdate()
@@ -69,6 +82,10 @@ namespace IIMEngine.Effects.Common
             //Calculating percentage between timer and jumpPeriod
             //Set positionDelta Y according to percentage and jumpHeight
             //Add position Delta to objectToMove localPosition
+            ObjectToMove.localPosition -= _positionDelta;
+            _timer += Time.deltaTime;
+            _positionDelta.y = _jumpHeight * _jumpCurve.Evaluate(_timer / _jumpPeriod);
+            ObjectToMove.localPosition += _positionDelta;
         }
     }
 }

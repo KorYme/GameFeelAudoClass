@@ -39,6 +39,9 @@ namespace IIMEngine.Effects.Common
             //Reset Timer
             //Remove rotation delta from objectToRotate localRotation (using eulerAngles)
             //Reset rotation delta Z
+            _timer = 0f;
+            _objectToRotate.eulerAngles -= _eulerAnglesDelta;
+            _eulerAnglesDelta.z = 0;
         }
 
         protected override IEnumerator OnEffectEndCoroutine()
@@ -62,6 +65,9 @@ namespace IIMEngine.Effects.Common
             //Reset Timer
             //Remove rotation delta from objectToRotate localRotation (using eulerAngles)
             //Reset rotation delta Z
+            _timer = 0f;
+            _objectToRotate.eulerAngles -= _eulerAnglesDelta;
+            _eulerAnglesDelta.z = 0;
         }
 
         protected override void OnEffectUpdate()

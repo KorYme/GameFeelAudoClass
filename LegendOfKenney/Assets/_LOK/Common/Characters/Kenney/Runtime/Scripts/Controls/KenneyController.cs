@@ -51,7 +51,7 @@ namespace LOK.Common.Characters.Kenney
             //Don't forget to normalize ;)
             _moveDirWriter.MoveDir = new Vector2(
                 (_GetInputMoveLeft() ? -1 : 0) + (_GetInputMoveRight() ? 1 : 0),
-                (_GetInputMoveDown() ? -1 : 0) + (_GetInputMoveUp() ? 1 : 0));
+                (_GetInputMoveDown() ? -1 : 0) + (_GetInputMoveUp() ? 1 : 0)).normalized;
         }
 
         private bool _GetInputDownAction()

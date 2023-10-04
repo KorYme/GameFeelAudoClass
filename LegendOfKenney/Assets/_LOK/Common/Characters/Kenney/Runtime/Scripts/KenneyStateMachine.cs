@@ -67,6 +67,7 @@ namespace LOK.Common.Characters.Kenney
         {
             //Call CurrentState StateUpdate
             CurrentState.StateUpdate();
+            
         }
 
         private void _InitAllStates()
@@ -89,7 +90,6 @@ namespace LOK.Common.Characters.Kenney
             PreviousState = CurrentState;
             //Change CurrentState using state in function parameter
             CurrentState = state;
-
             //Call StateEnter for current state (be careful, CurrentState can be null)
             CurrentState?.StateEnter(PreviousState);
         }

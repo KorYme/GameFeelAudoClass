@@ -303,6 +303,7 @@ MonoBehaviour:
     _gameObject: {fileID: 8150961605436140414}
     _entityID: 
     _entityGroup: 
+    _entityGroupScope: 1
   _turnCheckState: 0
 --- !u!1 &777879212505309643
 GameObject:
@@ -353,6 +354,7 @@ MonoBehaviour:
     _gameObject: {fileID: 8150961605436140414}
     _entityID: 
     _entityGroup: 
+    _entityGroupScope: 1
   _moveCheckState: 1
 --- !u!1 &823849440178012740
 GameObject:
@@ -629,6 +631,7 @@ MonoBehaviour:
     _gameObject: {fileID: 8150961605436140414}
     _entityID: 
     _entityGroup: 
+    _entityGroupScope: 1
 --- !u!1 &2781196557346453613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,6 +1580,7 @@ MonoBehaviour:
     _gameObject: {fileID: 8150961605436140414}
     _entityID: 
     _entityGroup: 
+    _entityGroupScope: 1
   _moveCheckState: 0
 --- !u!1 &7487535471857544807
 GameObject:
@@ -1668,6 +1672,7 @@ MonoBehaviour:
     _gameObject: {fileID: 8150961605436140414}
     _entityID: 
     _entityGroup: 
+    _entityGroupScope: 1
 --- !u!1 &8150961605436140414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,7 +1747,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1521356846346052543
 MonoBehaviour:

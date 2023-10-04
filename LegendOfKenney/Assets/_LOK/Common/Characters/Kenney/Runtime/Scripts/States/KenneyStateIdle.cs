@@ -14,26 +14,18 @@ namespace LOK.Common.Characters.Kenney
         protected override void OnStateEnter(AKenneyState previousState)
         {
             //Force MoveSpeed to 0
-            StateMachine.IMovable.MoveSpeed = 0;
+            Movable.MoveSpeed = 0;
         }
 
         protected override void OnStateUpdate()
         {
             //Do nothing if movements are locked
-            if (Movable.AreMovementsLocked || Movable.MoveDir == Vector2.zero) return;
             //If there is MoveDir
             //Change to StateAccelerate if MovementsData.StartAccelerationDuration > 0
             //Change to StateWalk otherwise
-            if (MovementsData.StartAccelerationDuration > 0)
-            {
-                ChangeState(StateMachine.StateAccelerate);
-                return;
-            }
-            else
-            {
-                ChangeState(StateMachine.StateWalk);
-                return;
-            }
+            if (Movable.AreMovementsLocked || Movable.MoveDir == Vector2.zero) return;
+            ChangeState(StateMachine.StateAccelerate);
+            return;
         }
     }
 }

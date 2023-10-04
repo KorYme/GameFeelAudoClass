@@ -41,21 +41,30 @@ namespace IIMEngine.Effects.Common
             //Reset Timer
             //Remove scale delta from objectToScale localScale
             //Reset scale delta X/Y
+            _timer = 0f;
+            ObjectToScale.localScale -= _scaleDelta;
+            _scaleDelta = Vector3.one;
         }
 
         protected override IEnumerator OnEffectEndCoroutine()
         {
             //TODO: Do not interrupt bouncing effect
             //Wait for bounce period
-                //Remove scale delta from objectToScale localScale
-                //Increment Timer with delta time
-                //Calculating percentage between timer and bouncePeriod
-                //Applying animation curve on percentage
-                //Set scale delta X/Y according to percentage and bounceFactorX/bounceFactorY
-                //Add scale delta from objectToScale localScale
-                //Wait for next frame (with yield instruction)
-            
-            yield break;
+            //Remove scale delta from objectToScale localScale
+            //Increment Timer with delta time
+            //Calculating percentage between timer and bouncePeriod
+            //Applying animation curve on percentage
+            //Set scale delta X/Y according to percentage and bounceFactorX/bounceFactorY
+            //Add scale delta from objectToScale localScale
+            //Wait for next frame (with yield instruction)
+            while (_timer < _bouncePeriod)
+            {
+                ObjectToScale.localScale -= _scaleDelta;
+                _timer += Time.deltaTime;
+                _scaleDelta = new Vector3(_bounceCurveX.Evaluate(_timer / _bouncePeriod) * _bounceFactorX, _bounceCurveY.Evaluate(_timer / _bouncePeriod) * _bounceFactorY, 1f);
+                ObjectToScale.localScale += _scaleDelta;
+                yield return null;
+            }
         }
 
         protected override void OnEffectEnd()
@@ -63,6 +72,9 @@ namespace IIMEngine.Effects.Common
             //Reset Timer
             //Remove scale delta from objectToScale localScale
             //Reset scale delta X/Y
+            _timer = 0f;
+            ObjectToScale.localScale -= _scaleDelta;
+            _scaleDelta = Vector3.one;
         }
         
         protected override void OnEffectUpdate()
@@ -73,6 +85,14 @@ namespace IIMEngine.Effects.Common
             //Calculating percentage between timer and bouncePeriod
             //Set scale delta X/Y according to percentage and bounceFactorX/bounceFactorY
             //Add scale delta from objectToScale localScale
+            ObjectToScale.localScale -= _scaleDelta;
+            _timer += Time.deltaTime;
+            if (_isLooping && _timer > _bouncePeriod)
+            {
+                _timer = 0;
+            }
+            _scaleDelta = new Vector3(_bounceCurveX.Evaluate(_timer / _bouncePeriod) * _bounceFactorX, _bounceCurveY.Evaluate(_timer / _bouncePeriod) * _bounceFactorY, 1f);
+            ObjectToScale.localScale += _scaleDelta;
         }
     }
 }

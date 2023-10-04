@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Kenney_Data_Movements
   m_EditorClassIdentifier: 
   _speedMode: 1
-  _speed: 3
-  _speedMax: 3
-  _startAccelerationDuration: 2
-  _stopDecelerationDuration: 2
+  _speed: 4
+  _speedMax: 4
+  _startAccelerationDuration: 0.4
+  _stopDecelerationDuration: 0.4
   _turnBackAngleThreshold: 120
-  _turnBackDecelerationDuration: 3
-  _turnBackAccelerationDuration: 3
+  _turnBackDecelerationDuration: 0.1
+  _turnBackAccelerationDuration: 0.6

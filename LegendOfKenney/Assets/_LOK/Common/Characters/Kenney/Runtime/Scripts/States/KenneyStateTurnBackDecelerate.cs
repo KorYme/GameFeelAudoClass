@@ -29,8 +29,8 @@ namespace LOK.Common.Characters.Kenney
         protected override void OnStateEnter(AKenneyState previousState)
         {
             //Set IsTurningBack to true
-            Movable.IsTurningBack = true;
             //Calculate _timer according to MoveSpeed / MoveSpeedMax / MovementsData.TurnBackDecelerationDuration
+            Movable.IsTurningBack = true;
             _speedPercent = Movable.MoveSpeed / Movable.MoveSpeedMax;
         }
 
@@ -39,35 +39,24 @@ namespace LOK.Common.Characters.Kenney
             //Set IsTurningBack to false
             Movable.IsTurningBack = false;
         }
-        
+
         protected override void OnStateUpdate()
         {
             //Go to State Idle if Movements are locked
-            if (Movable.AreMovementsLocked)
+            //If there is MoveDir and the angle between MoveDir and OrientDir > MovementsData.TurnBackAngleThreshold
+            //Go to StateAccelerate
+            //Increment _speedPercent with deltaTime
+            //If _speedPercent > MovementsData.TurnBackDecelerationDuration
+            //Go to StateTurnBackAccelerate if there is MoveDir
+            //Go to StateIdle otherwise
+            //Calculate percent using timer and MovementsData.TurnBackDecelerationDuration
+            //Calculate MoveSpeed according to percent and MoveSpeedMax
+            if (Movable.AreMovementsLocked || MovementsData.TurnBackDecelerationDuration <= 0)
             {
                 ChangeState(StateMachine.StateIdle);
                 return;
             }
-            //If there is MoveDir and the angle between MoveDir and OrientDir > MovementsData.TurnBackAngleThreshold
-                //Go to StateAccelerate
-            if (Movable.MoveDir != Vector2.zero && Vector2.Angle(Movable.MoveDir, Movable.OrientDir) > MovementsData.TurnBackAngleThreshold)
-            {
-                if (MovementsData.TurnBackAccelerationDuration > 0)
-                {
-                    ChangeState(StateMachine.StateTurnBackAccelerate);
-                    return;
-                }
-                else
-                {
-                    ChangeState(StateMachine.StateWalk);
-                    return;
-                }
-            }
-            //Increment _speedPercent with deltaTime
             _speedPercent -= Time.deltaTime / MovementsData.StopDecelerationDuration;
-            //If _speedPercent > MovementsData.TurnBackDecelerationDuration
-            //Go to StateTurnBackAccelerate if there is MoveDir
-            //Go to StateIdle otherwise
             if (_speedPercent <= 0)
             {
                 if (Movable.MoveDir == Vector2.zero)
@@ -81,9 +70,7 @@ namespace LOK.Common.Characters.Kenney
                     return;
                 }
             }
-            //Calculate percent using timer and MovementsData.TurnBackDecelerationDuration
-            //Calculate MoveSpeed according to percent and MoveSpeedMax
-            Movable.MoveSpeed = Mathf.Lerp(0,MovementsData.SpeedMax, _speedPercent);
+            Movable.MoveSpeed = Movable.MoveSpeedMax * _speedPercent;
         }
     }
 }
