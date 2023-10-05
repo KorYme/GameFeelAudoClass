@@ -87,7 +87,7 @@ namespace IIMEngine.Effects.Common
             //Add scale delta from objectToScale localScale
             ObjectToScale.localScale -= _scaleDelta;
             _timer += Time.deltaTime;
-            if (_isLooping && _timer > _bouncePeriod)
+            if (_isLooping && _timer >= _bouncePeriod)
             {
                 _timer = 0;
             }

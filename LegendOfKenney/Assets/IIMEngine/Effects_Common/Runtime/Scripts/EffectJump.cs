@@ -83,6 +83,10 @@ namespace IIMEngine.Effects.Common
             //Set positionDelta Y according to percentage and jumpHeight
             //Add position Delta to objectToMove localPosition
             ObjectToMove.localPosition -= _positionDelta;
+            if (_isLooping && _timer >= _jumpPeriod)
+            {
+                _timer = 0;
+            }
             _timer += Time.deltaTime;
             _positionDelta.y = _jumpHeight * _jumpCurve.Evaluate(_timer / _jumpPeriod);
             ObjectToMove.localPosition += _positionDelta;
