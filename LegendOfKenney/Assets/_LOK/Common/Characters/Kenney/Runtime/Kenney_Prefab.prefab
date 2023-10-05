@@ -695,7 +695,7 @@ MonoBehaviour:
   _effectID: 
   _delayBefore: 0
   _objectToRotate: {fileID: 2845068576964658038}
-  _timeModifier: {fileID: 0}
+  _timeModifier: {fileID: 6609966289019960179}
   _rotationAngle: -25
   _rotationPeriod: 0.2
   _rotationStopDelay: 0
@@ -1978,7 +1978,7 @@ MonoBehaviour:
   _effectID: 
   _delayBefore: 1
   _objectToScale: {fileID: 2845068576964658038}
-  _timeModifier: {fileID: 0}
+  _timeModifier: {fileID: 6609966289019960179}
   _bounceFactorX: -0.05
   _bounceFactorY: 0.05
   _bouncePeriod: 3

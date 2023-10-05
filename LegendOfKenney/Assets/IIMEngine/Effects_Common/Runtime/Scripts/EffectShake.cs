@@ -40,7 +40,7 @@ namespace IIMEngine.Effects.Common
             //Add position Delta to objectToShake localPosition
             ObjectToShake.localPosition -= _positionDelta;
             _timer += Time.deltaTime;
-            float percent = (Mathf.PingPong(_timer / _shakePeriod, _shakePeriod) * 2) - 1;
+            float percent = Mathf.PingPong(_timer, _shakePeriod) / _shakePeriod;
             _positionDelta = new Vector3(percent * _shakePowerX, percent * _shakePowerY, 0);
             ObjectToShake.localPosition += _positionDelta;
         }

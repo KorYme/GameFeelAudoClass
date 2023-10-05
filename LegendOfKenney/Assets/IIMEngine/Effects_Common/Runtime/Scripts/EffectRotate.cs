@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Data.Common;
 using IIMEngine.Effects;
 using UnityEngine;
 
@@ -34,13 +35,15 @@ namespace IIMEngine.Effects.Common
         #pragma warning restore 0414
         #endregion
         
+
+
         protected override void OnEffectReset()
         {
             //Reset Timer
             //Remove rotation delta from objectToRotate localRotation (using eulerAngles)
             //Reset rotation delta Z
             _timer = 0f;
-            //_objectToRotate.eulerAngles -= _eulerAnglesDelta; // PROBLEME
+            _objectToRotate.localEulerAngles -= _eulerAnglesDelta; // PROBLEME
             _eulerAnglesDelta.z = 0;
         }
 
@@ -55,9 +58,15 @@ namespace IIMEngine.Effects.Common
                 //Set eulerAngles delta Z according to percentage and rotationAngle
                 //Add rotation delta from objectToRotate localRotation (using eulerAngles)
                 //Wait for next frame (with yield instruction)
-                
-            
-            yield break;
+
+            while (_timer < _rotationStopDelay)
+            {
+                _objectToRotate.localEulerAngles -= _eulerAnglesDelta;
+                _timer += Time.deltaTime;
+                _eulerAnglesDelta = Vector3.forward * _rotationCurve.Evaluate(_timer / _rotationPeriod) * RotationAngle;
+                _objectToRotate.localEulerAngles += _eulerAnglesDelta;
+                yield return null;
+            }
         }
         
         protected override void OnEffectEnd()
@@ -66,7 +75,7 @@ namespace IIMEngine.Effects.Common
             //Remove rotation delta from objectToRotate localRotation (using eulerAngles)
             //Reset rotation delta Z
             _timer = 0f;
-            //_objectToRotate.eulerAngles -= _eulerAnglesDelta; // PROBLEME
+            _objectToRotate.localEulerAngles = Vector3.zero;
             _eulerAnglesDelta.z = 0;
         }
 
@@ -78,6 +87,14 @@ namespace IIMEngine.Effects.Common
             //Calculating percentage between timer and rotationPeriod
             //Set eulerAngles Z according to percentage and rotationAngle
             //Add rotation delta from objectToRotate localRotation (using eulerAngles)
+            _objectToRotate.localEulerAngles -= _eulerAnglesDelta;
+            _timer += Time.deltaTime;
+            if (_isLooping && _timer >= _rotationPeriod)
+            {
+                _timer = 0;
+            }
+            _eulerAnglesDelta = Vector3.forward * _rotationCurve.Evaluate(_timer / _rotationPeriod) * RotationAngle;
+            _objectToRotate.localEulerAngles += _eulerAnglesDelta;
         }
     }
 }

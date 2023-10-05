@@ -86,7 +86,7 @@ namespace IIMEngine.Effects.Common
             //Set scale delta X/Y according to percentage and bounceFactorX/bounceFactorY
             //Add scale delta from objectToScale localScale
             ObjectToScale.localScale -= _scaleDelta;
-            _timer += Time.deltaTime;
+            _timer += Time.deltaTime * _timeModifier.GetValue();
             if (_isLooping && _timer >= _bouncePeriod)
             {
                 _timer = 0;
