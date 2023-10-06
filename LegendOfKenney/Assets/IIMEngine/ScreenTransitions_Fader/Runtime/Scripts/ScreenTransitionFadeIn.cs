@@ -22,7 +22,18 @@ namespace IIMEngine.ScreenTransitions.Fader
             //Get Current Alpha from ImageRenderer.
             //Lerp ImageRenderer Current Alpha to 1 using _fadeInDuration & _fadeInCurve.
             //Don't forget => you will need a loop (for, while). You are inside a Coroutine.
-            yield break;
+
+            Color initialColor = _imageRenderer.color;
+            float timer = 0f;
+            while (timer < _fadeInDuration)
+            {
+                timer += Time.deltaTime;
+                _imageRenderer.color = Color.Lerp(initialColor, 
+                    new Color(initialColor.r, initialColor.g, initialColor.b, 1f), 
+                    _fadeInCurve.Evaluate(timer / _fadeInDuration));
+                Debug.Log(_imageRenderer.color.a);
+                yield return null;
+            }
         }
     }
 }

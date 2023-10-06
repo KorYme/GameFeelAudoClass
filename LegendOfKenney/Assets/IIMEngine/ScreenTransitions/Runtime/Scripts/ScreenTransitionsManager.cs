@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace IIMEngine.ScreenTransitions
@@ -36,6 +37,7 @@ namespace IIMEngine.ScreenTransitions
         public IEnumerator PlayAndWaitTransition(string transitionID)
         {
             //Call PlayTransition and wait until transition is finished
+            PlayTransition(transitionID);
             yield break;
         }
 
@@ -44,18 +46,21 @@ namespace IIMEngine.ScreenTransitions
             //Find Transition using transitionID and return it
             //Play Transition if transition found
             //Return Transition
-            return null;
+            ScreenTransition transition = _allTransitions.ToList().Find(x => x.TransitionID == transitionID);
+            transition?.Play();
+            return transition;
         }
 
         private ScreenTransition[] _FindAllTransitions()
         {
             //Find All ScreenTransitions
-            return Array.Empty<ScreenTransition>();
+            return FindObjectsOfType<ScreenTransition>();
         }
 
         private void _InitAllTransitions()
         {
             //Call ScreenTransition.Init() method for each found transitions inside _allTransitions
+            _allTransitions.ToList().ForEach(x => x.Init());
         }
     }
 }

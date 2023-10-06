@@ -22,7 +22,17 @@ namespace IIMEngine.ScreenTransitions.Fader
             //Get Current Alpha from ImageRenderer.
             //Lerp ImageRenderer Current Alpha to 0 using _fadeOutDuration & _fadeOutCurve.
             //Don't forget => you will need a loop (for, while). You are inside a Coroutine.
-            yield break;
+
+            Color initialColor = _imageRenderer.color;
+            float timer = 0f;
+            while (timer < _fadeOutDuration)
+            {
+                timer += Time.deltaTime;
+                _imageRenderer.color = Color.Lerp(initialColor, 
+                    new Color(initialColor.r, initialColor.g, initialColor.b, 0f),
+                    _fadeOutCurve.Evaluate(timer / _fadeOutDuration));
+                yield return null;
+            }
         }
     }
 }
