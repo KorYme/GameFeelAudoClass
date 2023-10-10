@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace IIMEngine.Camera
@@ -71,7 +72,7 @@ namespace IIMEngine.Camera
                 //Optional : Clamp Destination with Camera Bounds
                 //Lerp position with destination using CameraProfile.FollowLerpSpeed
             // --------------------------------------------------------
-            
+            //       LA
             cameraTransform.position = new Vector3(_position.x, _position.y, cameraTransform.position.z);
             cameraTransform.rotation = _rotation;
             camera.orthographicSize = _size;
@@ -116,16 +117,30 @@ namespace IIMEngine.Camera
         private IEnumerator _CoroutineChangeProfile(CameraProfile profile, CameraProfileTransition transition = null)
         {
             IsTransitionActive = true;
-            //TODO: Implements Transition 
-            //Lerp between current position and profile position
-            //Lerp between current rotation and profile rotation
-            //Lerp between current size and profile Orthographic Size
-            //Use profile animation curve to improve transition
+            if (transition != null)
+            {
+                //TODO: Implements Transition 
+                //Lerp between current position and profile position
+                //Lerp between current rotation and profile rotation
+                //Lerp between current size and profile Orthographic Size
+                //Use profile animation curve to improve transition
+                float timer = 0f;
+                Vector3 initialPosition = _position;
+                Quaternion initialRotation = _rotation;
+                float initialSize = _size;
+                while (timer < transition.Duration)
+                {
+                    timer += Time.deltaTime;
+                    _position = Vector3.Lerp(initialPosition, profile.Position, transition.Curve.Evaluate(timer/transition.Duration));
+                    _rotation = Quaternion.Lerp(initialRotation, profile.Rotation, transition.Curve.Evaluate(timer/transition.Duration));
+                    _size = Mathf.Lerp(initialSize, profile.OrthographicSize, transition.Curve.Evaluate(timer/transition.Duration));
+                    yield return null;
+                }
+            }
             _position = profile.Position;
             _rotation = profile.Rotation;
             _size = profile.OrthographicSize;
             IsTransitionActive = false;
-            yield break;
         }
     }
 }

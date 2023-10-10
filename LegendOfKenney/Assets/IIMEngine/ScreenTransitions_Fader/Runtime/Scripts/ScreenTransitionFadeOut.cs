@@ -28,9 +28,8 @@ namespace IIMEngine.ScreenTransitions.Fader
             while (timer < _fadeOutDuration)
             {
                 timer += Time.deltaTime;
-                _imageRenderer.color = Color.Lerp(initialColor, 
-                    new Color(initialColor.r, initialColor.g, initialColor.b, 0f),
-                    _fadeOutCurve.Evaluate(timer / _fadeOutDuration));
+                _imageRenderer.color = new Color(initialColor.r, initialColor.g, initialColor.b,
+                    Mathf.Lerp(initialColor.a, 0f, _fadeOutCurve.Evaluate(timer / _fadeOutDuration)));
                 yield return null;
             }
         }

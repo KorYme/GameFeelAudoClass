@@ -37,8 +37,8 @@ namespace IIMEngine.ScreenTransitions
         public IEnumerator PlayAndWaitTransition(string transitionID)
         {
             //Call PlayTransition and wait until transition is finished
-            PlayTransition(transitionID);
-            yield break;
+            ScreenTransition transiton = PlayTransition(transitionID);
+            yield return new WaitWhile(() => transiton.IsPlaying);
         }
 
         public ScreenTransition PlayTransition(string transitionID)
