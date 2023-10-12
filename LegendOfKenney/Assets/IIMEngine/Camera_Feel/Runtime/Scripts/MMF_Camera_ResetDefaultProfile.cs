@@ -1,5 +1,6 @@
 ﻿using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace IIMEngine.Camera.Feel
 {
@@ -27,6 +28,7 @@ namespace IIMEngine.Camera.Feel
         protected override void CustomPlayFeedback(Vector3 position, float feedbacksIntensity = 1)
         {
             //TODO: Reset To Default Profile (with transition)
+            CameraGlobals.Profiles.ResetToDefaultProfile(_transition);
         }
     }
 }

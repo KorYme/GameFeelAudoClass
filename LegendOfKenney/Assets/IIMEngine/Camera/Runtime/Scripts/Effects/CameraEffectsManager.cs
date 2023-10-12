@@ -19,11 +19,13 @@ namespace IIMEngine.Camera
         public void AddEffect(CameraEffect effect)
         {
             //TODO: Add effect to active effects
+            _activeEffects.Add(effect);
         }
 
         public void RemoveEffect(CameraEffect effect)
         {
             //TODO: Remove effect to active effects
+            _activeEffects.Remove(effect);
         }
         
         private void Awake()
@@ -38,6 +40,15 @@ namespace IIMEngine.Camera
             //Sum all effects together into PositionDelta and SizeDelta
             //Add PositionDelta to camera position
             //Add SizeDelta to camera orthographic size
+            
+            PositionDelta = Vector3.zero;
+            SizeDelta = 0;
+            _activeEffects.ForEach(effect => {
+                PositionDelta += effect.PositionDelta;
+                SizeDelta += effect.SizeDelta;
+            });
+            cameraTransform.position += PositionDelta;
+            camera.orthographicSize += SizeDelta;
         }
     }
 }
