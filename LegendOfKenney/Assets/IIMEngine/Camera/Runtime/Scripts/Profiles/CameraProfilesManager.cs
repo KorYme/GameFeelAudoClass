@@ -73,6 +73,34 @@ namespace IIMEngine.Camera
                 //Lerp position with destination using CameraProfile.FollowLerpSpeed
             // --------------------------------------------------------
             //       LA
+            Debug.Log("A degager");
+            if (_currentProfile.FollowTargetGroups != null && !IsTransitionActive)
+            {
+                if (_currentProfile.UsePOIs)
+                {
+                    Vector3 centroid = Vector3.zero;
+                    if (_cacheCameraPOIs.Length == 0)
+                    {
+                        foreach (CameraPOI item in _cacheCameraPOIs)
+                        {
+                            centroid += item.Position;
+                        }
+                        centroid /= _cacheCameraPOIs.Length;
+                    }
+                    if (Vector3.Distance(_destination, centroid) > _POIDestinationDistanceThreshold)
+                    {
+                        
+                    }
+                    else
+                    {
+                        _destination = centroid;
+                    }
+                }
+                else
+                {
+
+                }
+            }
             cameraTransform.position = new Vector3(_position.x, _position.y, cameraTransform.position.z);
             cameraTransform.rotation = _rotation;
             camera.orthographicSize = _size;
