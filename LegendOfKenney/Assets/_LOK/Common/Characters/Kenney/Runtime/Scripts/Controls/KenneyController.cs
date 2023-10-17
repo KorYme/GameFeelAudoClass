@@ -2,6 +2,7 @@ using IIMEngine.Movements2D;
 using LOK.Core.UserProfiles;
 using LOK.Core.Interactions;
 using UnityEngine;
+using Rewired;
 
 namespace LOK.Common.Characters.Kenney
 {
@@ -12,10 +13,17 @@ namespace LOK.Common.Characters.Kenney
         private IMove2DDirWriter _moveDirWriter;
         private Interactor _interactor;
 
+        Player _currentPlayer;
+
+        const string ACTION_NAME_INTERACTION = "Interact";
+        const string ACTION_NAME_MOVE_HORIZONTAL = "MoveHorizontal";
+        const string ACTION_NAME_MOVE_VERTICAL = "MoveVertical";
+
         private void Start()
         {
             _moveDirWriter = _kenneyRoot.GetComponent<IMove2DDirWriter>();
             _interactor = _kenneyRoot.GetComponent<Interactor>();
+            _currentPlayer = ReInput.players.GetPlayer("Player0");
         }
 
         void Update()
@@ -47,36 +55,12 @@ namespace LOK.Common.Characters.Kenney
         private void _MovePlayerFromInputs()
         {
             //TODO: Write MoveDir according to inputs
-            //You can _GetInputMoveLeft /  _GetInputMoveRight() / _GetInputMoveUp() / _GetInputMoveDown()
+            //You can use _GetInputAxisMovement()
             //Don't forget to normalize ;)
-            _moveDirWriter.MoveDir = new Vector2(
-                (_GetInputMoveLeft() ? -1 : 0) + (_GetInputMoveRight() ? 1 : 0),
-                (_GetInputMoveDown() ? -1 : 0) + (_GetInputMoveUp() ? 1 : 0)).normalized;
+            _moveDirWriter.MoveDir = _GetInputAxisMovement().normalized;
         }
 
-        private bool _GetInputDownAction()
-        {
-            return Input.GetKeyDown(KeyCode.Space);
-        }
-
-        private bool _GetInputMoveLeft()
-        {
-            return Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow);
-        }
-
-        private bool _GetInputMoveRight()
-        {
-            return Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
-        }
-
-        private bool _GetInputMoveDown()
-        {
-            return Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
-        }
-
-        private bool _GetInputMoveUp()
-        {
-            return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow);
-        }
+        private bool _GetInputDownAction() => _currentPlayer.GetButtonDown(ACTION_NAME_INTERACTION);
+        private Vector2 _GetInputAxisMovement() => _currentPlayer.GetAxis2D(ACTION_NAME_MOVE_HORIZONTAL, ACTION_NAME_MOVE_VERTICAL);
     }
 }
